@@ -185,7 +185,7 @@ class Slider{
 
         return true
     }
-    randomize(w){
+    async randomize(w){
         for (let i = 0; i < w; i++){
             let random = Math.floor(100 * Math.random())
             debugMe("random: " + random)
@@ -198,15 +198,21 @@ class Slider{
             } else if(random >= 65 && random < 100){
                 this.swap(this.blank.x, this.blank.y - 1)
             }
+            let cokolwiek = await new Promise(function(resolve){
+                var timerHandle = setTimeout(function(){
+                    clearTimeout(timerHandle)
+                    resolve(null)
+                }, 50)
+            })
         }
     }
 }
 
 let slider = null;
 
-function runMe(n, img, sliderid, msgboxid){
+async function runMe(n, img, sliderid, msgboxid){
     slider = new Slider(n, img, sliderid, msgboxid)
-    slider.randomize(100)
+    await slider.randomize(500)
 
     /*
     debugMe(slider.czyKoniec())
