@@ -229,10 +229,38 @@ class Timer{
         return timeElapsed
     }
 
+    printDigit(value){
+        let html = `<img src="./img/c${value}.gif"/>`
+        return html
+    }
+    print2Digits(value){
+        let html = ''        
+        const d1 = Math.floor(value/10)
+        const d2 = value % 10
+        html += this.printDigit(d1)
+        html += this.printDigit(d2)
+        return html
+    }
+
+    print3Digits(value){
+        let html = ''
+        const d1 = Math.floor(value/100)
+        const d2 = Math.floor(value/10) % 10
+        const d3 = value % 10
+        html += this.printDigit(d1)
+        html += this.printDigit(d2)
+        html += this.printDigit(d3)
+        return html
+    }
+
     printDate(){
         const elapsedTime = this.getElapsedTime()
         // debugMe(elapsedTime, this)
-        let html = elapsedTime.getUTCHours() + " : " + elapsedTime.getUTCMinutes() + " : " + elapsedTime.getUTCSeconds() + " : " + elapsedTime.getUTCMilliseconds()
+        let html = 
+            this.print2Digits(elapsedTime.getUTCHours()) + `<img src="./img/colon.gif"/>` 
+            + this.print2Digits(elapsedTime.getUTCMinutes()) + `<img src="./img/colon.gif"/>`
+            + this.print2Digits(elapsedTime.getUTCSeconds()) + `<img src="./img/colon.gif"/>`
+            + this.print3Digits(elapsedTime.getUTCMilliseconds())
         this.divId.innerHTML = html
     }
     
