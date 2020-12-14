@@ -1,4 +1,4 @@
-"use strict";
+"use stric;";
 var debug = true;
 
 function debugMe(...debugText){
@@ -52,6 +52,7 @@ class Slider{
         this.uw = this.wysokosc / this.n
         debugMe(this)
         this.tiles = []
+        this.divId.innerHTML = ''
         for (let x = 0; x < this.n; x++){
             this.tiles.push(new Array(this.n))
             for (let y = 0; y < this.n; y++){
@@ -70,18 +71,28 @@ class Slider{
         this.msgBoxOff();
         let that = this
         this.divId.addEventListener("click",function(event){
-            const rect = that.divId.getBoundingClientRect();
-            const mx = event.clientX - rect.x
-            const my = event.clientY - rect.y
-            const x = Math.floor(mx/that.us)
-            const y = Math.floor(my/that.uw)
-            debugMe(x,y)
-            that.swap(x,y)
-            if(that.czyKoniec()){
-                that.msgBoxOn("gra skonczona!")
+            if(that.gameOver == false){
+                const rect = that.divId.getBoundingClientRect();
+                const mx = event.clientX - rect.x
+                const my = event.clientY - rect.y
+                const x = Math.floor(mx/that.us)
+                const y = Math.floor(my/that.uw)
+                debugMe(x,y)
+                that.swap(x,y)
+                if(that.czyKoniec()){
+                    timer.stop()
+                    that.msgBoxOn("gra skonczona!")
+                    that.stopGame()
+                }
+            } else {
+                debugMe("gra juz skonczona, ignoruje klik")
             }
-            
         })
+        this.gameOver = false;
+    }
+
+    stopGame(){
+        this.gameOver = true;
     }
 
     msgBoxOn(msg){
@@ -156,33 +167,6 @@ class Slider{
 
         }
 
-/*
-
-        if (x == this.blank.x){
-            if (y == this.blank.y - 1 || y == this.blank.y + 1){
-                let elem1 = this.tiles[x][y]
-                let blank = this.tiles[this.blank.x][this.blank.y]
-                this.tiles[x][y] = blank
-                this.tiles[this.blank.x][this.blank.y] = elem1
-
-                this.blank.x = x
-                this.blank.y = y
-                debugMe("x const", this.blank)
-            }
-        } else if (y == this.blank.y){
-            if (x == this.blank.x - 1 || x == this.blank.x + 1){
-                let elem1 = this.tiles[x][y]
-                let blank = this.tiles[this.blank.x][this.blank.y]
-                this.tiles[x][y] = blank
-                this.tiles[this.blank.x][this.blank.y] = elem1
-
-                this.blank.x = x
-                this.blank.y = y
-                debugMe("y const", this.blank)
-            }
-        }
-        */
-
         return true
     }
     async randomize(w){
@@ -202,17 +186,84 @@ class Slider{
                 var timerHandle = setTimeout(function(){
                     clearTimeout(timerHandle)
                     resolve(null)
-                }, 50)
+                }, 20)
             })
         }
     }
 }
 
-let slider = null;
+class Timer{
+    constructor(divId){
+        this.divId = document.getElementById(divId)
+        this.started = false;
+        this.zero()
+    }
 
-async function runMe(n, img, sliderid, msgboxid){
+    zero(){
+        this.stop()
+        this.startDate = null;
+        this.printDate()
+    }
+
+    start(){
+        this.zero()
+        this.startDate = new Date()
+        this.stopDate = null
+        this.printDate()
+        this.continousUpdate(97)
+    }
+
+    getElapsedTime(){
+        const now = new Date()
+        let interval;
+        if(this.startDate){
+            if(this.stopDate){
+                interval = this.stopDate.getTime() - this.startDate.getTime()
+            } else {
+                interval = now.getTime() - this.startDate.getTime()
+            }
+        } else {
+            interval = 0
+        }
+        const timeElapsed = new Date(interval)
+        return timeElapsed
+    }
+
+    printDate(){
+        const elapsedTime = this.getElapsedTime()
+        // debugMe(elapsedTime, this)
+        let html = elapsedTime.getUTCHours() + " : " + elapsedTime.getUTCMinutes() + " : " + elapsedTime.getUTCSeconds() + " : " + elapsedTime.getUTCMilliseconds()
+        this.divId.innerHTML = html
+    }
+    
+    continousUpdate(milisecs){
+        const that = this
+        this.timeoutHandle = setInterval(function(){
+            that.printDate()
+        }, milisecs)    
+
+    }
+    stop(){
+        this.stopDate = new Date()
+        this.printDate()
+        clearInterval(this.timeoutHandle)
+    }
+}
+
+let slider = null;
+let timer = null;
+
+async function runMe(n, img, sliderid, msgboxid, zegarId){
+    if (timer == null){
+        timer = new Timer(zegarId)
+    }
+    timer.zero()
+    if(slider != null){
+        debugMe("zatrzymuje stara gre",slider)
+        slider.stopGame()    }
     slider = new Slider(n, img, sliderid, msgboxid)
-    await slider.randomize(500)
+    await slider.randomize(2)
+    timer.start()
 
     /*
     debugMe(slider.czyKoniec())
