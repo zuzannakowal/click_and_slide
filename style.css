@@ -1,6 +1,4 @@
-.selektor{
-    background-color: blue;
-}
+
 
 td{
     border: solid black 1px;
@@ -35,4 +33,41 @@ td{
 .cropped img{
     width: 300px;
     height: 300px;
+}
+
+.showSlide {
+    display: none
+}
+
+.showSlide img {
+    width: 100px;
+    height: 100px; 
+}
+
+.selektor{
+    max-width: 100px;
+    position: relative;
+    margin: auto;
+}
+
+.lewa, .prawa {
+    cursor: pointer;
+    position: relative;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: blue;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 0 3px 3px 0;
+}
+
+.prawa {
+    right: 10;
+    border-radius: 3px 0 0 3px;
+}
+
+.lewa:hover, .prawa:hover {
+    background-color: rgba(115, 115, 115, 0.8)
 }

@@ -7,10 +7,32 @@
     <link rel="stylesheet" href="style.css">
     <script src="slider.js"></script>
 </head>
-<body onload="runMeOnce('zegar', 'scores')">
+<body onload="runMeOnce('zegar', 'scores', 'showSlide')">
 
 
-    <div class="selektor" id="selektor">selektorek</div>
+    <div>
+        <table class=selektor>
+            <tr>
+                <td><a class="lewa" onclick="sliderMove(-1)">L</a></td>
+                <td>
+                    <div class="sselektor" id="selektor">
+                        <div class="showSlide fade">
+                            <img src="./img/kwiatki1.jpg" />
+                        </div>
+                        <div class="showSlide fade">
+                            <img src="./img/kwiatki2.jpg" />
+                        </div>
+                        <div class="showSlide fade">
+                            <img src="./img/kwiatki3.jpg" />
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <a class="prawa" onclick="sliderMove(+1)">R</a>
+                </td>
+            </tr>
+        </table>
+    </div>
     <div class="przyciski">
         <button onclick="runMe(3, null, 'slider', 'msg', 'zegar', 'scores')">3x3</button>
         <button onclick="runMe(4, null, 'slider', 'msg', 'zegar', 'scores')">4x4</button>

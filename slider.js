@@ -386,14 +386,50 @@ class Timer{
     }
 }
 
+class Selector{
+    constructor(className){
+        this.className = className;
+        this.nrSlajdu = 1;
+        this.wyswietlSlajd(this.nrSlajdu)
+    }
+    
+    sliderMove(i){
+        this.nrSlajdu += i
+        this.wyswietlSlajd()
+    }
+
+    /*
+    setSlide(i){
+        this.nrSlajdu = i
+        this.wyswietlSlajd()
+    }
+    */
+
+    wyswietlSlajd(){
+        let i
+        let slides = document.getElementsByClassName(this.className)
+        if (this.nrSlajdu > slides.length) {
+            this.nrSlajdu = 1;
+        }
+        if (this.nrSlajdu < 1){
+            this.nrSlajdu = slides.length;
+        }
+        for (let i = 0; i< slides.length; i++){
+            slides[i].style.display = 'none';
+        }
+        slides[this.nrSlajdu - 1].style.display = 'block'
+    }
+}
+
 let slider = null;
 let timer = null;
 let scores = null;
+let selector = null;
 
-function runMeOnce(zegarId, scoresId){
+function runMeOnce(zegarId, scoresId, sliderClassName){
     timer = new Timer(zegarId)
     scores = new Scores(scoresId)
-    
+    selector = new Selector(sliderClassName)
 }
 
 async function runMe(n, img, sliderid, msgboxid, zegarId, scoresId){
@@ -408,4 +444,8 @@ async function runMe(n, img, sliderid, msgboxid, zegarId, scoresId){
     slider = new Slider(n, img, sliderid, msgboxid)
     await slider.randomize(2)
     timer.start()
+}
+
+function sliderMove(n){
+    selector.sliderMove(n)
 }
