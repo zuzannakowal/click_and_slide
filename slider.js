@@ -81,8 +81,9 @@ class Slider{
                 that.swap(x,y)
                 if(that.czyKoniec()){
                     timer.stop()
-                    that.msgBoxOn("gra skonczona!")
                     that.stopGame()
+                    scores.addScores(that.n, timer.getElapsedInterval())
+                    that.msgBoxOn("gra skonczona!")
                 }
             } else {
                 debugMe("gra juz skonczona, ignoruje klik")
@@ -96,11 +97,14 @@ class Slider{
     }
 
     msgBoxOn(msg){
-        this.msgId.innerHTML = msg;
+        // this.msgId.innerHTML = msg;
+        scores.updateScores()
+        this.msgId.style.visibility = 'visible'
     }    
     
     msgBoxOff(){
-        this.msgId.innerHTML = '';
+        // this.msgId.innerHTML = '';
+        this.msgId.style.visibility = 'hidden'
     }
     czyKoniec(){
         for (let x = 0; x < this.n; x++){
@@ -192,6 +196,93 @@ class Slider{
     }
 }
 
+class Scores{
+    constructor(scoresId){
+        this.scoresId = document.getElementById(scoresId)
+        this.scores = {n2: null, n3: null, n4: null, n5: null, n6: null}
+        this.scores.n2 = new Array()
+        this.scores.n3 = new Array()
+        this.scores.n4 = new Array()
+        this.scores.n5 = new Array()
+        this.scores.n6 = new Array()
+    }
+
+    addScores(wymiar, wynikMsecs){
+        let tab = new Array()
+        if (wymiar == 2){
+            tab = this.scores.n2
+        } else if (wymiar == 3){
+            tab = this.scores.n3
+        } else if (wymiar == 4){
+            tab = this.scores.n4
+        } else if (wymiar == 5){
+            tab = this.scores.n5
+        } else if (wymiar == 6){
+            tab = this.scores.n6
+        }
+
+        let wynik = new Array()
+        tab.forEach((element, idx) => {wynik.push(element)})
+        wynik.push(wynikMsecs)
+        debugMe('wynik',wynik)
+        wynik.sort(function(elem1, elem2){
+            return elem1 - elem2;
+        })
+        tab.length = 0
+        wynik.forEach((element, idx) =>  {if (idx < 10){
+            tab.push(element)
+        }})
+    }
+
+    pad(num, size) {
+        num = num.toString();
+        while (num.length < size) num = "0" + num;
+        return num;
+    }
+
+    formatTime(msecs){
+        let interval
+        if (msecs === 'undefined') {
+            interval = 0;
+        } else {
+            interval = msecs
+        }
+        let elapsedTime = new Date(interval)
+        let html = ''
+        if (interval > 0){
+            html = 
+            this.pad(elapsedTime.getUTCHours(),2) + `:` 
+            + this.pad(elapsedTime.getUTCMinutes(),2) + `:`
+            + this.pad(elapsedTime.getUTCSeconds(),2) + `:`
+            + this.pad(elapsedTime.getUTCMilliseconds(),3)
+        } else {
+            html = '-'
+        }
+        return html;
+    }
+
+    updateScores(){
+        debugMe('scores',this.scores, this.scores.n3, this.scores.n3[0])
+        let tab = this.scores.n3
+        debugMe('n3',tab)
+        debugMe('el0',tab[0])
+        let dd = [3]
+        debugMe('dd',dd)
+        debugMe('el0dd',dd[0])
+        let html = `<table>`
+        html += `<tr><td class="nTd">3x3</td><td class="nTd">4x4</td><td class="nTd">5x5</td><td class="nTd">6x6</td></tr>`
+        for (let i = 0; i < 10; i++){
+            html += `<tr><td class="wynikTd">` + this.formatTime(this.scores.n3[i]) + 
+            `</td><td class="wynikTd">` + this.formatTime(this.scores.n4[i]) +
+            `</td><td class="wynikTd">` + this.formatTime(this.scores.n5[i]) + 
+            `</td><td class="wynikTd">` + this.formatTime(this.scores.n6[i]) + `</td></tr>`
+        }
+        html += `</table>`
+        debugMe(this.scores.n3[0])
+        this.scoresId.innerHTML = html
+    }
+}
+
 class Timer{
     constructor(divId){
         this.divId = document.getElementById(divId)
@@ -213,7 +304,7 @@ class Timer{
         this.continousUpdate(97)
     }
 
-    getElapsedTime(){
+    getElapsedInterval(){
         const now = new Date()
         let interval;
         if(this.startDate){
@@ -225,6 +316,11 @@ class Timer{
         } else {
             interval = 0
         }
+        return interval
+    }
+
+    getElapsedTime(){
+        const interval = this.getElapsedInterval()
         const timeElapsed = new Date(interval)
         return timeElapsed
     }
@@ -280,26 +376,24 @@ class Timer{
 
 let slider = null;
 let timer = null;
+let scores = null;
 
-async function runMe(n, img, sliderid, msgboxid, zegarId){
+function runMeOnce(zegarId, scoresId){
+    timer = new Timer(zegarId)
+    scores = new Scores(scoresId)
+    
+}
+
+async function runMe(n, img, sliderid, msgboxid, zegarId, scoresId){
     if (timer == null){
         timer = new Timer(zegarId)
     }
     timer.zero()
     if(slider != null){
         debugMe("zatrzymuje stara gre",slider)
-        slider.stopGame()    }
+        slider.stopGame()
+    }
     slider = new Slider(n, img, sliderid, msgboxid)
     await slider.randomize(2)
     timer.start()
-
-    /*
-    debugMe(slider.czyKoniec())
-    slider.rysuj()
-    slider.swap(2, 1)
-    slider.swap(1, 1)
-    slider.rysuj()
-    slider.randomize(n**2)
-    slider.rysuj()
-    */
 }

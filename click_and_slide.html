@@ -7,18 +7,20 @@
     <link rel="stylesheet" href="style.css">
     <script src="slider.js"></script>
 </head>
-<body>
+<body onload="runMeOnce('zegar', 'scores')">
 
 
     <div class="selektor" id="selektor">selektorek</div>
     <div class="przyciski">
-        <button onclick="runMe(2, null, 'slider', 'msg', 'zegar')">3x3</button>
-        <button onclick="runMe(4, null, 'slider', 'msg', 'zegar')">4x4</button>
-        <button onclick="runMe(5, null, 'slider', 'msg', 'zegar')">5x5</button>
-        <button onclick="runMe(6, null, 'slider', 'msg', 'zegar')">6x6</button>
+        <button onclick="runMe(3, null, 'slider', 'msg', 'zegar', 'scores')">3x3</button>
+        <button onclick="runMe(4, null, 'slider', 'msg', 'zegar', 'scores')">4x4</button>
+        <button onclick="runMe(5, null, 'slider', 'msg', 'zegar', 'scores')">5x5</button>
+        <button onclick="runMe(6, null, 'slider', 'msg', 'zegar', 'scores')">6x6</button>
     </div>
     <div class="zegar" id="zegar">00:00:00</div>
-    <div class="msg" id="msg"></div>
+    <div class="msg" id="msg">Gra skończona!
+        <div class="scores" id="scores">scores</div>
+    </div>
     <div class="slider" id="slider"></div>
 
    
