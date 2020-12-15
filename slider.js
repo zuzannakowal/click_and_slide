@@ -117,24 +117,6 @@ class Slider{
         return true
     }
 
-    rysuj(){
-        /*
-        let html = `<table>`
-        for (let y = 0; y < this.n; y++){
-            html += `<tr>`
-            for (let x = 0; x < this.n; x++){
-                html += `<td>${this.tiles[x][y].id}</td>`
-            }
-            html += `</tr>`
-        }
-        html += `</table><br>blank: x: ${this.blank.x}, y: ${this.blank.y}`
-        this.divId.innerHTML = html
-
-*/
-    }
-
- 
-
     swap(x, y){
         debugMe("swapuje x: " + x + " y: " + y + ", blank: ", this.blank)
         if (x < 0 || y < 0 || x >= this.n || y >= this.n){
@@ -234,7 +216,6 @@ class Scores{
         let wynik = new Array()
         tab.forEach((element, idx) => {wynik.push(element)})
         wynik.push(wynikMsecs)
-        debugMe('wynik',wynik)
         wynik.sort(function(elem1, elem2){
             return elem1 - elem2;
         })
@@ -244,7 +225,6 @@ class Scores{
         }})
 
         var cookieval = JSON.stringify(this.scores)
-        debugMe(cookieval)
         this.setCookie('scores',cookieval, 100)
     }
 
@@ -277,12 +257,6 @@ class Scores{
 
     updateScores(){
         debugMe('scores',this.scores, this.scores.n3, this.scores.n3[0])
-        let tab = this.scores.n3
-        debugMe('n3',tab)
-        debugMe('el0',tab[0])
-        let dd = [3]
-        debugMe('dd',dd)
-        debugMe('el0dd',dd[0])
         let html = `<table>`
         html += `<tr><td class="nTd">3x3</td><td class="nTd">4x4</td><td class="nTd">5x5</td><td class="nTd">6x6</td></tr>`
         for (let i = 0; i < 10; i++){
@@ -292,7 +266,6 @@ class Scores{
             `</td><td class="wynikTd">` + this.formatTime(this.scores.n6[i]) + `</td></tr>`
         }
         html += `</table>`
-        debugMe(this.scores.n3[0])
         this.scoresId.innerHTML = html
     }
 
