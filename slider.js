@@ -199,12 +199,22 @@ class Slider{
 class Scores{
     constructor(scoresId){
         this.scoresId = document.getElementById(scoresId)
-        this.scores = {n2: null, n3: null, n4: null, n5: null, n6: null}
-        this.scores.n2 = new Array()
-        this.scores.n3 = new Array()
-        this.scores.n4 = new Array()
-        this.scores.n5 = new Array()
-        this.scores.n6 = new Array()
+        const cookieval = this.getCookie('scores')
+        debugMe ('cookieval: >>'+cookieval+'<<')
+        if(cookieval != ''){
+            let storedScores = JSON.parse(cookieval)
+            debugMe('byly zapisy w cookie')
+            this.scores = storedScores;
+        } else {
+            this.scores = {n2: null, n3: null, n4: null, n5: null, n6: null}
+            this.scores.n2 = new Array()
+            this.scores.n3 = new Array()
+            this.scores.n4 = new Array()
+            this.scores.n5 = new Array()
+            this.scores.n6 = new Array()
+            debugMe('no cookie stored with scores')
+        }
+        debugMe('startuje z tymi notami:',this.scores)
     }
 
     addScores(wymiar, wynikMsecs){
@@ -232,6 +242,10 @@ class Scores{
         wynik.forEach((element, idx) =>  {if (idx < 10){
             tab.push(element)
         }})
+
+        var cookieval = JSON.stringify(this.scores)
+        debugMe(cookieval)
+        this.setCookie('scores',cookieval, 100)
     }
 
     pad(num, size) {
@@ -281,6 +295,31 @@ class Scores{
         debugMe(this.scores.n3[0])
         this.scoresId.innerHTML = html
     }
+
+    setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires="+d.toUTCString();
+        const cookiestring = cname + "=" + cvalue + ";" + expires + ";path=/";
+        document.cookie = cookiestring
+        debugMe('saved cookie',cookiestring)
+    }
+      
+    getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+    }
+      
 }
 
 class Timer{
