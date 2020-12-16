@@ -398,12 +398,6 @@ class Selector{
         this.wyswietlSlajd()
     }
 
-    /*
-    setSlide(i){
-        this.nrSlajdu = i
-        this.wyswietlSlajd()
-    }
-    */
 
     getImgPath(){
         let slides = document.getElementsByClassName(this.className)
@@ -413,7 +407,6 @@ class Selector{
     }
 
     wyswietlSlajd(){
-        let i
         let slides = document.getElementsByClassName(this.className)
         debugMe('slajdy: ', slides)
         if (this.nrSlajdu > slides.length) {
