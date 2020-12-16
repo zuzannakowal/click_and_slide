@@ -1,15 +1,25 @@
-
-
-td{
-    border: solid black 1px;
+.nTd{
+    border: solid white 1px;
 }
 
-.przyciski{
-
+.wynikTd{
+    border: solid white 1px;
 }
 
-.zegar{
+.scoresTable{
+    width: 450px;
+}
 
+.scores{
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+}
+
+.headline{
+    color: crimson;
+    font-size: 24px;
+    margin-top: 50px;
 }
 
 .msg{
@@ -25,6 +35,8 @@ td{
     z-index: 2;
     cursor: pointer;
     color: white;
+    text-align: center;
+    flex-direction: column;
 }
 
 .slider{
@@ -33,7 +45,10 @@ td{
     position: relative;
 }
 
-.plytka{
+.sliderTop{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 .cropped {
@@ -51,6 +66,23 @@ td{
     width: 100px;
     height: 100px;
     position: relative;
+}
+
+.przyciski{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.zegar{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.dol{
+    display: flex;
+    flex-direction: column;
 }
 
 .selektor{
@@ -73,7 +105,7 @@ td{
     width: auto;
     padding: 16px;
     margin-top: -22px;
-    color: blue;
+    color: black;
     font-weight: bold;
     font-size: 18px;
     border-radius: 0 3px 3px 0;

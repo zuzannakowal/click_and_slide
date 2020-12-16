@@ -99,7 +99,7 @@ class Slider{
     msgBoxOn(msg){
         // this.msgId.innerHTML = msg;
         scores.updateScores()
-        this.msgId.style.display = 'block'
+        this.msgId.style.display = 'flex'
     }    
     
     msgBoxOff(){
@@ -257,7 +257,7 @@ class Scores{
 
     updateScores(){
         debugMe('scores',this.scores, this.scores.n3, this.scores.n3[0])
-        let html = `<table>`
+        let html = `<table class="scoresTable">`
         html += `<tr><td class="nTd">3x3</td><td class="nTd">4x4</td><td class="nTd">5x5</td><td class="nTd">6x6</td></tr>`
         for (let i = 0; i < 10; i++){
             html += `<tr><td class="wynikTd">` + this.formatTime(this.scores.n3[i]) + 
@@ -442,7 +442,7 @@ async function runMe(n, img, sliderid, msgboxid, zegarId, scoresId){
     }
     const filePath = selector.getImgPath()
     slider = new Slider(n, filePath, sliderid, msgboxid)
-    await slider.randomize(2)
+    await slider.randomize(250)
     timer.start()
 }
 
