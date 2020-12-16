@@ -36,18 +36,23 @@ td{
 }
 
 .showSlide {
-    display: none
-}
-
-.showSlide img {
+    display: block;
     width: 100px;
-    height: 100px; 
+    height: 100px;
+    position: relative;
 }
 
 .selektor{
     max-width: 100px;
     position: relative;
     margin: auto;
+}
+
+.sselektor{
+    width: 95px;
+    height: 100px;
+    display: flex;
+    overflow: hidden;
 }
 
 .lewa, .prawa {
