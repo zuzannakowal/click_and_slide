@@ -442,7 +442,7 @@ async function runMe(n, img, sliderid, msgboxid, zegarId, scoresId){
     }
     const filePath = selector.getImgPath()
     slider = new Slider(n, filePath, sliderid, msgboxid)
-    await slider.randomize(250)
+    await slider.randomize(2)
     timer.start()
 }
 

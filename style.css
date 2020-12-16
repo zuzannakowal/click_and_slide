@@ -1,13 +1,14 @@
-.nTd{
+.nTd, .wynikTd{
     border: solid white 1px;
-}
-
-.wynikTd{
-    border: solid white 1px;
+    width: 110px;
+    height: 20px;
+    vertical-align: middle;
+    font-size: 12px;
+    font-family: "Lucida Console", "Courier New", monospace;
 }
 
 .scoresTable{
-    width: 450px;
+    width: 440px;
 }
 
 .scores{
