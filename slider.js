@@ -60,7 +60,7 @@ class Slider{
                 if (x== this.n -1 && y == this.n - 1){
                     src = './img/black.png'
                 } else {
-                    src = './img/kwiatki2.jpg';
+                    src = this.imgPath;
                 }
                 this.tiles[x][y] = new Tile(y * this.n + x, this.divId, src, x*this.us, y*this.uw, this.us, this.uw)
                 this.tiles[x][y].imgDiv.style.left = (x * this.us) + "px"
@@ -99,12 +99,12 @@ class Slider{
     msgBoxOn(msg){
         // this.msgId.innerHTML = msg;
         scores.updateScores()
-        this.msgId.style.visibility = 'visible'
+        this.msgId.style.display = 'flex'
     }    
     
     msgBoxOff(){
         // this.msgId.innerHTML = '';
-        this.msgId.style.visibility = 'hidden'
+        this.msgId.style.dislpay = 'none'
     }
     czyKoniec(){
         for (let x = 0; x < this.n; x++){
@@ -257,7 +257,7 @@ class Scores{
 
     updateScores(){
         debugMe('scores',this.scores, this.scores.n3, this.scores.n3[0])
-        let html = `<table>`
+        let html = `<table class="scoresTable">`
         html += `<tr><td class="nTd">3x3</td><td class="nTd">4x4</td><td class="nTd">5x5</td><td class="nTd">6x6</td></tr>`
         for (let i = 0; i < 10; i++){
             html += `<tr><td class="wynikTd">` + this.formatTime(this.scores.n3[i]) + 
@@ -386,14 +386,49 @@ class Timer{
     }
 }
 
+class Selector{
+    constructor(className){
+        this.className = className;
+        this.nrSlajdu = 1;
+        this.wyswietlSlajd(this.nrSlajdu)
+    }
+    
+    sliderMove(i){
+        this.nrSlajdu += i
+        this.wyswietlSlajd()
+    }
+
+
+    getImgPath(){
+        let slides = document.getElementsByClassName(this.className)
+        let slide = slides[this.nrSlajdu - 1]
+        debugMe(slide.src)
+        return slide.src
+    }
+
+    wyswietlSlajd(){
+        let slides = document.getElementsByClassName(this.className)
+        debugMe('slajdy: ', slides)
+        if (this.nrSlajdu > slides.length) {
+            this.nrSlajdu = 1;
+        }
+        if (this.nrSlajdu < 1){
+            this.nrSlajdu = slides.length;
+        }
+        debugMe("wyswietlam slajd ",this.nrSlajdu)
+        slides[this.nrSlajdu - 1].scrollIntoView({behavior: "smooth", inline:'center', block: 'center'})
+    }
+}
+
 let slider = null;
 let timer = null;
 let scores = null;
+let selector = null;
 
-function runMeOnce(zegarId, scoresId){
+function runMeOnce(zegarId, scoresId, sliderClassName){
     timer = new Timer(zegarId)
     scores = new Scores(scoresId)
-    
+    selector = new Selector(sliderClassName)
 }
 
 async function runMe(n, img, sliderid, msgboxid, zegarId, scoresId){
@@ -405,7 +440,12 @@ async function runMe(n, img, sliderid, msgboxid, zegarId, scoresId){
         debugMe("zatrzymuje stara gre",slider)
         slider.stopGame()
     }
-    slider = new Slider(n, img, sliderid, msgboxid)
-    await slider.randomize(2)
+    const filePath = selector.getImgPath()
+    slider = new Slider(n, filePath, sliderid, msgboxid)
+    await slider.randomize(250)
     timer.start()
+}
+
+function sliderMove(n){
+    selector.sliderMove(n)
 }

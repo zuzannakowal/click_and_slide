@@ -1,21 +1,42 @@
-.selektor{
-    background-color: blue;
+.nTd{
+    border: solid white 1px;
 }
 
-td{
-    border: solid black 1px;
+.wynikTd{
+    border: solid white 1px;
 }
 
-.przyciski{
-
+.scoresTable{
+    width: 450px;
 }
 
-.zegar{
+.scores{
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+}
 
+.headline{
+    color: crimson;
+    font-size: 24px;
+    margin-top: 50px;
 }
 
 .msg{
-    visibility: hidden;
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.918);
+    z-index: 2;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    flex-direction: column;
 }
 
 .slider{
@@ -24,7 +45,10 @@ td{
     position: relative;
 }
 
-.plytka{
+.sliderTop{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 .cropped {
@@ -35,4 +59,63 @@ td{
 .cropped img{
     width: 300px;
     height: 300px;
+}
+
+.showSlide {
+    display: block;
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+.przyciski{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.zegar{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.dol{
+    display: flex;
+    flex-direction: column;
+}
+
+.selektor{
+    max-width: 100px;
+    position: relative;
+    margin: auto;
+}
+
+.sselektor{
+    width: 95px;
+    height: 100px;
+    display: flex;
+    overflow: hidden;
+}
+
+.lewa, .prawa {
+    cursor: pointer;
+    position: relative;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 0 3px 3px 0;
+}
+
+.prawa {
+    right: 10;
+    border-radius: 3px 0 0 3px;
+}
+
+.lewa:hover, .prawa:hover {
+    background-color: rgba(115, 115, 115, 0.8)
 }

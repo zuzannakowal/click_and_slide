@@ -7,21 +7,39 @@
     <link rel="stylesheet" href="style.css">
     <script src="slider.js"></script>
 </head>
-<body onload="runMeOnce('zegar', 'scores')">
-
-
-    <div class="selektor" id="selektor">selektorek</div>
-    <div class="przyciski">
-        <button onclick="runMe(3, null, 'slider', 'msg', 'zegar', 'scores')">3x3</button>
-        <button onclick="runMe(4, null, 'slider', 'msg', 'zegar', 'scores')">4x4</button>
-        <button onclick="runMe(5, null, 'slider', 'msg', 'zegar', 'scores')">5x5</button>
-        <button onclick="runMe(6, null, 'slider', 'msg', 'zegar', 'scores')">6x6</button>
+<body onload="runMeOnce('zegar', 'scores', 'showSlide')">
+    <div>
+        <table class=selektor>
+            <tr>
+                <td><a class="lewa" onclick="sliderMove(-1)">&#8604;</a></td>
+                <td>
+                    <div class="sselektor" id="sselektor">
+                            <img class="showSlide" id="P4" src="./img/kwiatki4.jfif" />
+                            <img class="showSlide" id="P1" src="./img/kwiatki1.jpg" />
+                            <img class="showSlide" id="P2"  src="./img/kwiatki2.jpg" />
+                            <img class="showSlide" id="P3"  src="./img/kwiatki3.jpg" />
+                    </div>
+                </td>
+                <td>
+                    <a class="prawa" onclick="sliderMove(+1)">&#8605;</a>
+                </td>
+            </tr>
+        </table>
     </div>
-    <div class="zegar" id="zegar">00:00:00</div>
-    <div class="msg" id="msg">Gra skończona!
-        <div class="scores" id="scores">scores</div>
+    <div class="dol">
+        <div class="przyciski">
+            <button onclick="runMe(3, null, 'slider', 'msg', 'zegar', 'scores')">3x3</button>
+            <button onclick="runMe(4, null, 'slider', 'msg', 'zegar', 'scores')">4x4</button>
+            <button onclick="runMe(5, null, 'slider', 'msg', 'zegar', 'scores')">5x5</button>
+            <button onclick="runMe(6, null, 'slider', 'msg', 'zegar', 'scores')">6x6</button>
+        </div>
+        <div class="zegar" id="zegar">00:00:00</div>
+        <div class="msg" id="msg" onclick='document.getElementById("msg").style.display = "none";'>
+            <div class="headline">Gra skończona!</div>
+            <div class="scores" id="scores">scores</div>
+        </div>
+        <div class="sliderTop"><div class="slider" id="slider"></div></div>
     </div>
-    <div class="slider" id="slider"></div>
 
    
 </body>
