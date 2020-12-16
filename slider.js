@@ -99,12 +99,12 @@ class Slider{
     msgBoxOn(msg){
         // this.msgId.innerHTML = msg;
         scores.updateScores()
-        this.msgId.style.visibility = 'visible'
+        this.msgId.style.display = 'block'
     }    
     
     msgBoxOff(){
         // this.msgId.innerHTML = '';
-        this.msgId.style.visibility = 'hidden'
+        this.msgId.style.dislpay = 'none'
     }
     czyKoniec(){
         for (let x = 0; x < this.n; x++){
@@ -423,7 +423,7 @@ class Selector{
             this.nrSlajdu = slides.length;
         }
         debugMe("wyswietlam slajd ",this.nrSlajdu)
-        slides[this.nrSlajdu - 1].scrollIntoView({behavior: "smooth", inline:'start', block: 'center'})
+        slides[this.nrSlajdu - 1].scrollIntoView({behavior: "smooth", inline:'center', block: 'center'})
     }
 }
 
